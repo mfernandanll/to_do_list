@@ -67,5 +67,24 @@ export const styles = StyleSheet.create({
         height: 19,
         flexDirection: 'row',
         alignItems: 'flex-end'
+    },
+    viewEmptyText: {
+        marginHorizontal: 20,
+        marginVertical: 48,
+        alignItems: 'center'
+    },
+    listEmptyText: {
+        color: '#808080',
+        fontSize: 14,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
+    listEmptySubText: {
+        color: '#808080',
+        fontSize: 14,
+        textAlign: 'center'
+    },
+    clipboardEmptyText: {
+        marginBottom: 16
     }
 })

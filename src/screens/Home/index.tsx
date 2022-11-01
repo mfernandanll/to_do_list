@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Image, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Task } from '../../components/Task';
 import { styles } from './style'
 
 export function Home() {
+    const [tasks, setTasks] = useState<string[]>([]);
+
     return (
         <View style={styles.container}>
             <Image style={styles.logo}
@@ -45,7 +48,26 @@ export function Home() {
                     />
                 </View>
             </View>
-            <Task />
+            <FlatList
+                data={tasks}
+                keyExtractor={item => item}
+                renderItem={({ item }) => (
+                    <Task />
+                )}
+                showsVerticalScrollIndicator={false}
+                ListEmptyComponent={() => (
+                    <View style={styles.viewEmptyText}>
+                        <Image style={styles.clipboardEmptyText}
+                            source={require('../../../assets/Clipboard.png')} />
+                        <Text style={styles.listEmptyText}>
+                            Você ainda não tem tarefas cadastradas
+                        </Text>
+                        <Text style={styles.listEmptySubText}>
+                            Crie tarefas e organize seus itens a fazer
+                        </Text>
+                    </View>
+                )}
+            />
         </View>
     );
 }
