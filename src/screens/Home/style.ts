@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 24
     },
     logo: {
+        alignItems: 'center',
         marginTop: 70,
     },
     input: {

@@ -28,8 +28,9 @@ export function Home() {
 
     return (
         <View style={styles.container}>
-            <Image style={styles.logo}
-                source={require('../../../assets/Logo.png')} />
+            <View style={styles.logo}>
+                <Image source={require('../../../assets/Logo.png')} />
+            </View>
             <View style={styles.form}>
                 <TextInput
                     style={styles.input}
