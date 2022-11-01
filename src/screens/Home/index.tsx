@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Image, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Task } from '../../components/Task';
-import { styles } from './style'
+import { styles } from './style';
 
 export function Home() {
     const [tasks, setTasks] = useState<string[]>([]);
+    const [taskDescription, setTaskDescription] = useState('');
+
+    function handleTaskAdd() {
+        setTasks(prevState => [...prevState, taskDescription]);        
+        setTaskDescription('');
+    }
 
     return (
         <View style={styles.container}>
@@ -16,8 +22,10 @@ export function Home() {
                     placeholder="Adicione uma nova tarefa"
                     placeholderTextColor="#6B6B6B"
                     keyboardType="default"
+                    onChangeText={setTaskDescription}
+                    value={taskDescription}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleTaskAdd}>
                     <Text style={styles.buttonText}>
                         ⊕
                     </Text>
@@ -52,7 +60,10 @@ export function Home() {
                 data={tasks}
                 keyExtractor={item => item}
                 renderItem={({ item }) => (
-                    <Task />
+                    <Task
+                        key={item}
+                        description={item}
+                    />
                 )}
                 showsVerticalScrollIndicator={false}
                 ListEmptyComponent={() => (

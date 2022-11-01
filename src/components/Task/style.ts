@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
         fontWeight: '400',
         fontSize: 14
     },
-    textDescriptionChecked: {
+    taskDescriptionChecked: {
         flex: 7,
         color: '#808080',
         flexWrap: 'wrap',

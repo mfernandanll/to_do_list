@@ -3,7 +3,12 @@ import { Text, TouchableOpacity, View, Pressable } from "react-native";
 import { styles } from "./style";
 import { Ionicons } from '@expo/vector-icons';
 
-export function Task() {
+type Props = {
+    description: string
+}
+
+
+export function Task({ description }: Props) {
     const [checked, setChecked] = useState(false);
 
     function onCheckmarkPress() {
@@ -19,8 +24,8 @@ export function Task() {
             </Pressable>
 
             <Text 
-                style={[styles.taskDescriptionBase, checked && styles.textDescriptionChecked]}>
-                Integer urna interdum massa libero auctor neque turpis turpis semper.
+                style={[styles.taskDescriptionBase, checked && styles.taskDescriptionChecked]}>
+                {description}
             </Text>
 
             <TouchableOpacity style={styles.deleteButton}>
