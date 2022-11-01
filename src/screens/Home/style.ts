@@ -4,8 +4,8 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#131016',
-        padding: 10,
-        alignItems: "center"
+        paddingHorizontal: 24,
+        alignItems: "center",
     },
     logo: {
         marginTop: 70,

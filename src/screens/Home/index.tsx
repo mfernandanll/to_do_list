@@ -1,4 +1,5 @@
 import { Image, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { Task } from '../../components/Task';
 import { styles } from './style'
 
 export function Home() {
@@ -44,6 +45,7 @@ export function Home() {
                     />
                 </View>
             </View>
+            <Task />
         </View>
     );
 }
