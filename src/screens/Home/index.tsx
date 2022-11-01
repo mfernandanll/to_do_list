@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { Image, Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { Task } from '../../components/Task';
 import { styles } from './style';
 
@@ -8,8 +8,22 @@ export function Home() {
     const [taskDescription, setTaskDescription] = useState('');
 
     function handleTaskAdd() {
-        setTasks(prevState => [...prevState, taskDescription]);        
+        setTasks(prevState => [...prevState, taskDescription]);
         setTaskDescription('');
+    }
+
+    function handleTaskRemove(taskDescription: string) {
+        Alert.alert("Remover", `Remover tarefa selecionada? `, [
+            {
+                text: "Sim",
+                onPress: () => setTasks(prevState => prevState.filter(task => task !== taskDescription))
+            },
+            {
+                text: "Não",
+                style: "cancel"
+            }
+        ]);
+        console.log(tasks);
     }
 
     return (
@@ -63,6 +77,7 @@ export function Home() {
                     <Task
                         key={item}
                         description={item}
+                        onRemove={() => (handleTaskRemove(item))}
                     />
                 )}
                 showsVerticalScrollIndicator={false}
