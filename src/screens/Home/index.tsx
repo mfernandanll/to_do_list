@@ -1,29 +1,56 @@
 import { useState } from 'react';
 import { Image, Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { Task } from '../../components/Task';
+import { Task, TaskInterface } from '../../components/Task';
 import { styles } from './style';
 
 export function Home() {
-    const [tasks, setTasks] = useState<string[]>([]);
+    const [tasks, setTasks] = useState<TaskInterface[]>([])
     const [taskDescription, setTaskDescription] = useState('');
+    const [countCreatedTasks, setCountCreatedTasks] = useState(0);
+    const [countDoneTasks, setCountDoneTasks] = useState<number>(0)
 
-    function handleTaskAdd() {
-        setTasks(prevState => [...prevState, taskDescription]);
+
+    function handleTaskAdd(taskDescription: string) {
+        const task: TaskInterface = {
+            id: Math.random(),
+            description: taskDescription,
+            done: false
+        }
+
+        setTasks(prevState => [...prevState, task])
+        setCountCreatedTasks(countCreatedTasks + 1)
         setTaskDescription('');
     }
 
-    function handleTaskRemove(taskDescription: string) {
+    function handleTaskRemove(id: number) {
         Alert.alert("Remover", `Remover tarefa selecionada? `, [
             {
                 text: "Sim",
-                onPress: () => setTasks(prevState => prevState.filter(task => task !== taskDescription))
+                onPress: () => {
+                    setTasks(prevState => prevState.filter(task => {
+                        if (task.id === id && task.done) {
+                            setCountDoneTasks(countDoneTasks - 1);
+                        }
+                        return task.id !== id;
+                    }))
+                    setCountCreatedTasks(countCreatedTasks - 1);
+                }
             },
             {
                 text: "Não",
                 style: "cancel"
             }
         ]);
-        console.log(tasks);
+    }
+
+    function handleMarkTaskAsDone(id: number) {
+        setTasks(array => array.map(item => {
+            if (item.id === id) {
+                item.done = !item.done
+                item.done ? setCountDoneTasks(countDoneTasks + 1) : setCountDoneTasks(countDoneTasks - 1);
+            }
+            return item;
+        }))
     }
 
     return (
@@ -40,7 +67,7 @@ export function Home() {
                     onChangeText={setTaskDescription}
                     value={taskDescription}
                 />
-                <TouchableOpacity style={styles.button} onPress={handleTaskAdd}>
+                <TouchableOpacity style={styles.button} onPress={() => handleTaskAdd(taskDescription)}>
                     <Text style={styles.buttonText}>
                         ⊕
                     </Text>
@@ -53,7 +80,7 @@ export function Home() {
                     </Text>
                     <TextInput
                         style={styles.counter}
-                        value='0'
+                        value={countCreatedTasks.toString()}
                         defaultValue='0'
                         editable={false}
                     />
@@ -65,7 +92,7 @@ export function Home() {
                     </Text>
                     <TextInput
                         style={styles.counter}
-                        value='0'
+                        value={countDoneTasks.toString()}
                         defaultValue='0'
                         editable={false}
                     />
@@ -73,12 +100,15 @@ export function Home() {
             </View>
             <FlatList
                 data={tasks}
-                keyExtractor={item => item}
+                keyExtractor={item => String(item.id)}
                 renderItem={({ item }) => (
                     <Task
-                        key={item}
-                        description={item}
-                        onRemove={() => (handleTaskRemove(item))}
+                        key={item.id}
+                        description={item.description}
+                        onCheckboxPress={handleMarkTaskAsDone}
+                        onPressRemove={handleTaskRemove}
+                        item={item}
+
                     />
                 )}
                 showsVerticalScrollIndicator={false}
