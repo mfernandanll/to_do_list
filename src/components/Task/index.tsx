@@ -9,9 +9,9 @@ export interface TaskInterface {
 }
 
 type Props = {
-    description: string,
-    onCheckboxPress: (id: number) => void,
-    onPressRemove: (id: number) => void,
+    description: string;
+    onCheckboxPress: (id: number) => void;
+    onPressRemove: (id: number) => void;
     item: TaskInterface;
 }
 
