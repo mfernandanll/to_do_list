@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View, Pressable } from "react-native";
 import { styles } from "./style";
 import { Ionicons } from '@expo/vector-icons';
 
-export type TaskInterface = {
+export type TaskType = {
     id: number;
     description: string;
     done: boolean;
@@ -12,7 +12,7 @@ type Props = {
     description: string;
     onCheckboxPress: (id: number) => void;
     onPressRemove: (id: number) => void;
-    item: TaskInterface;
+    item: TaskType;
 }
 
 export function Task({ description,

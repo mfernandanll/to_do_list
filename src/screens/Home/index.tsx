@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Image, Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { Task, TaskInterface } from '../../components/Task';
+import { Task, TaskType } from '../../components/Task';
 import { styles } from './style';
 
 export function Home() {
-    const [tasks, setTasks] = useState<TaskInterface[]>([])
+    const [tasks, setTasks] = useState<TaskType[]>([])
     const [taskDescription, setTaskDescription] = useState('');
     const [countCreatedTasks, setCountCreatedTasks] = useState(0);
     const [countDoneTasks, setCountDoneTasks] = useState<number>(0)
 
 
     function handleTaskAdd(taskDescription: string) {
-        const task: TaskInterface = {
+        const task: TaskType = {
             id: Math.random(),
             description: taskDescription,
             done: false
