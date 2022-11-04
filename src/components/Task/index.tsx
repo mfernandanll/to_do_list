@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View, Pressable } from "react-native";
 import { styles } from "./style";
 import { Ionicons } from '@expo/vector-icons';
 
-export interface TaskInterface {
+export type TaskInterface = {
     id: number;
     description: string;
     done: boolean;
