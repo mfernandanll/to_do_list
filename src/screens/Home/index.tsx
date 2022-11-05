@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { Image, Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { Task, TaskType } from '../../components/Task';
 import { styles } from './style';
+import { useState } from 'react';
+import { Image, View, Alert } from 'react-native';
+import { TaskType } from '../../components/Task';
+import { CounterInput } from '../../components/CounterInput';
+import { TodoInput } from "../../components/TodoInput";
+import { TodoList } from '../../components/TodoList';
 
 export function Home() {
     const [tasks, setTasks] = useState<TaskType[]>([])
@@ -58,72 +61,18 @@ export function Home() {
             <View style={styles.logo}>
                 <Image source={require('../../../assets/Logo.png')} />
             </View>
-            <View style={styles.form}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Adicione uma nova tarefa"
-                    placeholderTextColor="#6B6B6B"
-                    keyboardType="default"
-                    onChangeText={setTaskDescription}
-                    value={taskDescription}
-                />
-                <TouchableOpacity style={styles.button} onPress={() => handleTaskAdd(taskDescription)}>
-                    <Text style={styles.buttonText}>
-                        ⊕
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <TodoInput
+                setTaskDescription={setTaskDescription}
+                taskDescription={taskDescription}
+                onPress={handleTaskAdd} />
             <View style={styles.subtittles}>
-                <View style={styles.counterView}>
-                    <Text style={styles.createdText}>
-                        Criadas
-                    </Text>
-                    <TextInput
-                        style={styles.counter}
-                        value={countCreatedTasks.toString()}
-                        defaultValue='0'
-                        editable={false}
-                    />
-                </View>
-
-                <View style={styles.counterView}>
-                    <Text style={styles.doneText}>
-                        Concluídas
-                    </Text>
-                    <TextInput
-                        style={styles.counter}
-                        value={countDoneTasks.toString()}
-                        defaultValue='0'
-                        editable={false}
-                    />
-                </View>
+                <CounterInput title='Criadas' counter={countCreatedTasks} />
+                <CounterInput title='Concluídas' counter={countDoneTasks} />
             </View>
-            <FlatList
-                data={tasks}
-                keyExtractor={item => String(item.id)}
-                renderItem={({ item }) => (
-                    <Task
-                        key={item.id}
-                        description={item.description}
-                        onCheckboxPress={handleMarkTaskAsDone}
-                        onPressRemove={handleTaskRemove}
-                        item={item}
-
-                    />
-                )}
-                showsVerticalScrollIndicator={false}
-                ListEmptyComponent={() => (
-                    <View style={styles.viewEmptyText}>
-                        <Image style={styles.clipboardEmptyText}
-                            source={require('../../../assets/Clipboard.png')} />
-                        <Text style={styles.listEmptyText}>
-                            Você ainda não tem tarefas cadastradas
-                        </Text>
-                        <Text style={styles.listEmptySubText}>
-                            Crie tarefas e organize seus itens a fazer
-                        </Text>
-                    </View>
-                )}
+            <TodoList
+                tasks={tasks}
+                onCheckboxPress={handleMarkTaskAsDone}
+                onPressRemove={handleTaskRemove}
             />
         </View>
     );
